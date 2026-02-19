@@ -1,6 +1,7 @@
 "use client";
 import { Link } from "wouter";
-import bgImg from "/src/images/openfield.png";
+// import bgImg1 from "/src/images/openfield.png";
+import bgImg from "/src/images/alone-martina-stipan.jpg";
 // import { useEffect, useRef } from "react";
 import NavBar from "./NavBar";
 
@@ -22,7 +23,7 @@ export default function Homepage() {
                 <section id="hero" className="relative h-screen bg-cover bg-center flex items-center justify-center"
                 style={{ backgroundImage: `url(${bgImg})` }}>
                     <div className="bg-black/50 p-8 rounded-2xl text-center text-white">
-                        <h1 className="text-4xl font-bold mb-4">Heartgrove™</h1>
+                        <h1 className="text-4xl font-cinzel font-regular mb-4">Revival of Heartgrove™</h1>
                         <p className="mb-6 text-lg">
                         Rebuild the world. Uncover the aliens.
                         </p>
