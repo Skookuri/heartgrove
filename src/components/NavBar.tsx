@@ -47,9 +47,9 @@ const NavBar: React.FC<NavBarProps> = ({ sectionNames, sectionIDs }) => {
     };
 
     return (
-        <div className={`fixed top-0 left-0 w-full p-6 z-50 flex flex-wrap justify-between items-center transition-colors duration-300 
+        <div className={`fixed top-0 left-0 w-full p-6 z-50 flex flex-wrap justify-between items-center transition-colors duration-300 text-white 
             ${activeSection === "hero" ? "bg-transparent" : "bg-warmPurp-700"}`}>
-            <h2 className="text-2xl text-yt font-semibold">Heartgrove™</h2>
+            <h2 className="text-2xl text-yt font-semibold">Mystwood Games™</h2>
             <nav className="flex space-x-8">
                 <ul className="flex space-x-8">
                     {sectionNames.map((sectionName, index) => (
