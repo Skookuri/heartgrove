@@ -53,7 +53,7 @@ export default function Homepage() {
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Hidden Roles</h3>
-                        <p>Expose alien mimics before it’s too late.</p>
+                        <p>Expose the saboteurs before it’s too late.</p>
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Magical Factions</h3>
