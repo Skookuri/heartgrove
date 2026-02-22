@@ -6,8 +6,8 @@ import bgImg from "/src/images/alone-martina-stipan.jpg";
 import NavBar from "./NavBar";
 
 export default function Homepage() {
-    const sectionNames = ["HOME", "INFO", "FEATURES"];
-    const sectionIDs = ["hero", "info", "features"];
+    const sectionNames = ["HOME", "INFO", "FEATURES", "BLOG"];
+    const sectionIDs = ["hero", "info", "features", "blog"];
 
     // const handleScroll = (sectionID: string) => {
     //     const section = document.getElementById(sectionID);
