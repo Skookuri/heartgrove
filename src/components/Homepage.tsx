@@ -25,7 +25,7 @@ export default function Homepage() {
                     <div className="bg-black/50 p-8 rounded-2xl text-center text-white">
                         <h1 className="text-4xl font-cinzel font-regular mb-4">Revival of Heartgrove™</h1>
                         <p className="mb-6 text-lg">
-                        Rebuild the world. Uncover the aliens.
+                        Rebuild the world. Uncover the saboteurs.
                         </p>
                         <Link href="/shop">
                         <button className="px-6 py-3 bg-green-600 hover:bg-green-700 transition rounded-xl font-semibold">
@@ -40,8 +40,8 @@ export default function Homepage() {
                     <h2 className="text-2xl font-semibold mb-4">A Game of Rebirth & Betrayal</h2>
                     <p className="max-w-2xl mx-auto text-gray-700">
                         Heartgrove™ is a cooperative social-deduction strategy game where awakened
-                        animal clans work to restore a fallen world while hidden aliens
-                        sabotage from within.
+                        animal clans work to restore a fallen world while hidden saboteurs
+                        destroy from within.
                     </p>
                 </section>
 
