@@ -237,21 +237,46 @@ export default function Homepage() {
           </p>
 
           {/* Gold CTA button */}
-          <button
-            className="font-['Cinzel',serif] text-[0.78rem] uppercase tracking-[0.2em] font-bold px-14 py-4 cursor-pointer transition-all duration-200 hover:-translate-y-0.5"
-            style={{
-              background:
-                "linear-gradient(135deg, #b8940a 0%, #e8c96a 45%, #c8a84b 100%)",
-              color: "#06080a",
-              border: "none",
-              boxShadow: "0 4px 28px rgba(200,168,75,0.35)",
-            }}
-            onClick={() =>
-              document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
-            }
+          <form action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
+            method="post"
+            target="_blank"
+            className="max-w-md mx-auto"
           >
-            Sign Up Now
-          </button>
+            <input
+              type="text" name="FNAME" placeholder="Name..." required
+              className="w-full mb-4 bg-transparent border-b-2 border-[#e8c96a] font-['Crimson_Pro',serif] placeholder-[#7a7060]"
+            />
+
+            <input
+              type="email" name="EMAIL" placeholder="Email..." required
+              className="w-full mb-4 bg-transparent border-b-2 border-[#e8c96a] font-['Crimson_Pro',serif] placeholder-[#7a7060]"
+            />
+
+            {/* hidden anti-spam field from Mailchimp */}
+            <input
+              type="text"
+              name="b_999a3167de86a820884b66831_8f313026ee"
+              tabIndex="-1"
+              defaultValue=""
+              style={{ position: "absolute", left: "-5000px" }}
+            />
+
+            <button type="submit"
+                className="font-['Cinzel',serif] text-[0.78rem] uppercase tracking-[0.2em] font-bold px-14 py-4 cursor-pointer transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                background:
+                    "linear-gradient(135deg, #b8940a 0%, #e8c96a 45%, #c8a84b 100%)",
+                color: "#06080a",
+                border: "none",
+                boxShadow: "0 4px 28px rgba(200,168,75,0.35)",
+                }}
+                // onClick={() =>
+                // document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
+                // }
+            >
+                Sign Up Now
+            </button> 
+          </form>
 
           <p
             className="mt-5 font-['Cinzel',serif] text-[0.6rem] uppercase tracking-[0.15em]"
