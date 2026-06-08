@@ -123,7 +123,7 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
           color: "#e8c96a",
           background: "transparent",
         }}
-        onClick={() => scrollTo("waitlist")}
+        onClick={() => scrollTo("elist")}
       >
         E-List
       </button>

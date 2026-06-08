@@ -1,18 +1,19 @@
 // import { Link } from "wouter";
 import logo from "/src/images/logo-improved.png";
 import hgBg from "/src/images/alone-martina-stipan.jpg";
-import spaceAntsBg from "/src/images/espacio.jpg";
-import bobBg from "/src/images/ferre.jpg";
+// import spaceAntsBg from "/src/images/espacio.jpg";
+// import bobBg from "/src/images/ferre.jpg";
 import Slideshow from "./Slideshow";
 import { SlideData } from "./Slide";
 import NavBar from "./NavBar";
 
 // ─── Nav links ─────────────────────────────────────────────────────────────
 const navLinks: { label: string; id: string }[] = [
-  { label: "Games",  id: "features" },
-  { label: "E-List", id: "waitlist" },
-  { label: "Blog", id: "blog"},
-  { label: "About", id: "about"}
+  { label: "Our Game",  id: "hero" },
+//   { label: "Features", id:"features"},
+  { label: "E-List", id: "elist" },
+//   { label: "Blog", id: "blog"},
+//   { label: "About", id: "about"}
 ];
 
 // ─── Hero Slides ───────────────────────────────────────────────────────────
@@ -21,26 +22,26 @@ const heroSlides: SlideData[] = [
     bgImg: hgBg,
     title: "Revival of Heartgrove™",
     desc: "Rebuild the world as 6 Animal Clans & Uncover the Saboteurs.",
-    cta: "Pre-Order Now",
-    onCtaClick: () =>
-        document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" }),
-    },
-    {
-    bgImg: bobBg,
-    title: "Business of Business",
-    desc: "Hoard the biggest money stash as ferret corporate owners balancing stakeholder value with customer satisfaction.",
     cta: "Join E-List",
     onCtaClick: () =>
-        document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" }),
+        document.getElementById("elist")?.scrollIntoView({ behavior: "smooth" }),
     },
-    {
-    bgImg: spaceAntsBg,
-    title: "Space Ants!",
-    desc: "Tiny creatures, infinite cosmos.",
-    cta: "Join E-List",
-    onCtaClick: () =>
-        document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" }),
-    },
+    // {
+    // bgImg: bobBg,
+    // title: "Business of Business",
+    // desc: "Hoard the biggest money stash as ferret corporate owners balancing stakeholder value with customer satisfaction.",
+    // cta: "Join E-List",
+    // onCtaClick: () =>
+    //     document.getElementById("elist")?.scrollIntoView({ behavior: "smooth" }),
+    // },
+    // {
+    // bgImg: spaceAntsBg,
+    // title: "Space Ants!",
+    // desc: "Tiny creatures, infinite cosmos.",
+    // cta: "Join E-List",
+    // onCtaClick: () =>
+    //     document.getElementById("elist")?.scrollIntoView({ behavior: "smooth" }),
+    // },
 ];
 
 // ─── Features ───────────────────────────────────────────────────────
@@ -158,11 +159,7 @@ export default function Homepage() {
         <GoldDivider />
 
         {/* ── FEATURES ─────────────────────────────────────────────────────── */}
-        <section
-          id="features"
-          className="grid grid-cols-1 md:grid-cols-3"
-          style={{ borderTop: "1px solid rgba(200,168,75,0.1)" }}
-        >
+        <section id="features" className="grid grid-cols-1 md:grid-cols-3" style={{ borderTop: "1px solid rgba(200,168,75,0.1)" }}>
           {features.map(({ icon, heading, body }, i) => (
             <FeatureCard
               key={heading}
@@ -178,9 +175,9 @@ export default function Homepage() {
         {/* ── SHIMMER DIVIDER ──────────────────────────────────────────────── */}
         <GoldDivider ornament />
 
-        {/* ── WAITLIST ─────────────────────────────────────────────────────── */}
+        {/* ── ELIST ─────────────────────────────────────────────────────── */}
         <section
-          id="waitlist"
+          id="elist"
           className="relative py-28 px-8 text-center overflow-hidden"
           style={{
             background:
@@ -232,15 +229,14 @@ export default function Homepage() {
             className="font-['Crimson_Pro',serif] text-xl leading-[1.8] max-w-xl mx-auto mb-10"
             style={{ color: "#7a7060" }}
           >
-            Be first to know about pre-orders, Kickstarter launches, and exclusive
-            backer rewards.
+            Be among the first to enter the world of Revival of Heartgrove. E-list members who back a physical copy tier during our first Kickstarter campaign will unlock exclusive awards.
           </p>
 
           {/* Gold CTA button */}
           <form action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
             method="post"
             target="_blank"
-            className="max-w-md mx-auto"
+            className="max-w-md mx-auto text-xl"
           >
             <input
               type="text" name="FNAME" placeholder="Name..." required
@@ -271,7 +267,7 @@ export default function Homepage() {
                 boxShadow: "0 4px 28px rgba(200,168,75,0.35)",
                 }}
                 // onClick={() =>
-                // document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
+                // document.getElementById("elist")?.scrollIntoView({ behavior: "smooth" })
                 // }
             >
                 Sign Up Now
