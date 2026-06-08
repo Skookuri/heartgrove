@@ -1,5 +1,5 @@
 // import { Link } from "wouter";
-import logo from "/src/images/logo-better.png";
+import logo from "/src/images/logo-improved.png";
 import hgBg from "/src/images/alone-martina-stipan.jpg";
 import spaceAntsBg from "/src/images/espacio.jpg";
 import bobBg from "/src/images/ferre.jpg";
@@ -11,7 +11,8 @@ import NavBar from "./NavBar";
 const navLinks: { label: string; id: string }[] = [
   { label: "Games",  id: "features" },
   { label: "E-List", id: "waitlist" },
-  { label: "Blog", id: "blog"}
+  { label: "Blog", id: "blog"},
+  { label: "About", id: "about"}
 ];
 
 // ─── Hero Slides ───────────────────────────────────────────────────────────
