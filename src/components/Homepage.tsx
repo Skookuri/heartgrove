@@ -1,5 +1,5 @@
 // import { Link } from "wouter";
-import logo from "/src/images/logo-improved.png";
+import logo from "/src/images/MW_Logo.png";
 import hgBg from "/src/images/alone-martina-stipan.jpg";
 // import spaceAntsBg from "/src/images/espacio.jpg";
 // import bobBg from "/src/images/ferre.jpg";
@@ -50,7 +50,7 @@ const features = [
   {
     icon: "🌿",
     heading: "Cooperative Rebuilding",
-    body: "Gather resources and restore the Heartgrove.",
+    body: "Gather resources, trade, and restore the Heartgrove.",
   },
   {
     icon: "🎭",
@@ -236,7 +236,7 @@ export default function Homepage() {
           <form action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
             method="post"
             target="_blank"
-            className="max-w-md mx-auto text-xl"
+            className="max-w-xs mx-auto text-xl"
           >
             <input
               type="text" name="FNAME" placeholder="Name..." required
