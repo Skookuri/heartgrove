@@ -2,14 +2,154 @@ import { Link, useLocation } from "wouter";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, BG, TEXT, FONTS } from "../theme";
 import {
-  GoldDivider,
-  SectionEyebrow,
-  SectionHeading,
-  CornerOrnaments,
+    GoldDivider,
+    SectionEyebrow,
+    SectionHeading,
+    CornerOrnaments,
 } from "./ui";
 import logo from "/src/images/MW_Logo.png";
-// If you have a box-art / product image, swap this import:
-// import boxArt from "/src/images/heartgrove-box.jpg";
+import peacock from "/src/images/peacock_transparent.png"
+
+// ─── Product data ─────────────────────────────────────────────────────────────
+interface Product {
+    image: string;
+    name: string;
+    subtitle?: string;
+    description: string;
+    players?: string;
+    // playtime: string;
+    // tags: string;
+    // weight: string;
+}
+
+const PRODUCTS: Product[] = [
+    {
+        image: peacock,
+        name: "Revival of Heartgrove™",
+        subtitle: "",
+        players: "3–6",
+        description:
+            "Rebuild the world as 6 animal clans & uncover the saboteurs.",
+        // playtime: "100",
+        // tags: [Social Deduction, Resource Management, Asymmetrical],
+        // weight: "Medium",
+    },
+
+    // {
+    //     image: peacock,
+    //     name: "Revival of Heartgrove™",
+    //     subtitle: "",
+    //     players: "3–6",
+    //     description:
+    //         "Rebuild the world as 6 animal clans & uncover the saboteurs.",
+    //     // playtime: "100",
+    //     // tags: [Social Deduction, Resource Management, Asymmetrical],
+    //     // weight: "Medium",
+    // },
+
+    //     {
+    //     image: peacock,
+    //     name: "Revival of Heartgrove™",
+    //     subtitle: "",
+    //     players: "3–6",
+    //     description:
+    //         "Rebuild the world as 6 animal clans & uncover the saboteurs.",
+    //     // playtime: "100",
+    //     // tags: [Social Deduction, Resource Management, Asymmetrical],
+    //     // weight: "Medium",
+    // },
+];
+
+{/* Product card */}
+function ProductCard({ product }: { product: Product }) {
+return ( 
+    <div
+    className="flex flex-col overflow-hidden w-64"
+    style={{
+        border: `1px solid ${GOLD.muted}`,
+        background: "rgba(231,170,81,0.04)",
+        boxShadow: "0 8px 60px rgba(231,170,81,0.1)",
+    }}
+    >
+        {/* Product Image */}
+        <div
+            className="w-full flex items-center justify-center"
+            style={{
+                height: 200,
+                background:
+                    "radial-gradient(ellipse at 50% 60%, #1a0e00 0%, #06080a 100%)",
+                borderBottom: `1px solid ${GOLD.hairline}`,
+            }}
+        >
+            <img src={product.image} alt={product.name} className="w-full object-top"
+                style={{
+                    display: "block",
+                    objectFit: "cover",
+                    height: "100%",
+                    filter: "drop-shadow(0 0 24px rgba(231,170,81,0.2))",
+                }}/>
+        </div>
+
+        {/* Product info */}
+        <div className="p-5">
+            <h3 className="font-bold tracking-[0.1em] mb-1"
+                style={{
+                    fontFamily: FONTS.display,
+                    fontSize: "clamp(1rem, 3vw, 1.4rem)",
+                    color: TEXT.cream,
+                }}
+            >
+            {product.name}
+            </h3>
+            <p
+                className="text-xs tracking-[0.25em] mb-5"
+                style={{
+                    fontFamily: FONTS.heading,
+                    color: GOLD.primary,
+                }}
+            >
+            {product.players ? ` ${product.players} Players` : ""}
+            </p>
+            <p className="text-base leading-[1.8] mb-5"
+            style={{
+                fontFamily: FONTS.body,
+                color: TEXT.muted,
+            }}
+            >
+            {product.description}
+            </p>
+
+            {/* "Buy" / Coming Soon button */}
+            <button
+                disabled
+                className="w-full uppercase tracking-[0.2em] py-3 font-bold cursor-not-allowed"
+                style={{
+                fontFamily: FONTS.heading,
+                fontSize: "0.82rem",
+                background: GOLD_GRADIENT,
+                color: "#06080a",
+                border: "none",
+                boxShadow: "0 4px 28px rgba(231,170,81,0.25)",
+                opacity: 0.75,
+                }}
+            >
+                Coming Soon
+            </button>
+
+            <p
+                className="mt-4 uppercase tracking-[0.18em] text-center"
+                style={{
+                fontFamily: FONTS.heading,
+                fontSize: "0.6rem",
+                color: TEXT.dim,
+                }}
+            >
+                Available via Kickstarter · Date TBA
+            </p>
+        </div>
+    </div>
+)
+}
 
 export default function ShopPage() {
   const [, navigate] = useLocation();
@@ -104,100 +244,13 @@ export default function ShopPage() {
             <div className="h-px w-16" style={{ background: GOLD.muted }} />
           </div>
 
-          {/* Product card */}
-          <div
-            className="relative w-full max-w-md mx-auto mb-12 overflow-hidden"
-            style={{
-              border: `1px solid ${GOLD.muted}`,
-              background: "rgba(231,170,81,0.04)",
-              boxShadow: "0 8px 60px rgba(231,170,81,0.1)",
-            }}
-          >
-            {/* Product image placeholder — swap src for real box art */}
-            <div
-              className="w-full flex items-center justify-center"
-              style={{
-                height: 320,
-                background:
-                  "radial-gradient(ellipse at 50% 60%, #1a0e00 0%, #06080a 100%)",
-                borderBottom: `1px solid ${GOLD.hairline}`,
-              }}
-            >
-              {/* Replace this block with <img src={boxArt} … /> when available */}
-              <span
-                style={{
-                  fontSize: "clamp(5rem, 15vw, 8rem)",
-                  filter: "drop-shadow(0 0 32px rgba(231,170,81,0.25))",
-                }}
-              >
-                🌿
-              </span>
-            </div>
+        <div className="flex flex-wrap gap-3 items-start">
+        {PRODUCTS.map((p) => (
+            <ProductCard key={p.name} product={p} />
+        ))}
+        </div>
 
-            {/* Product info */}
-            <div className="px-8 py-8">
-              <h3
-                className="font-bold tracking-[0.1em] mb-2"
-                style={{
-                  fontFamily: FONTS.display,
-                  fontSize: "clamp(1rem, 3vw, 1.4rem)",
-                  color: TEXT.cream,
-                }}
-              >
-                Revival of Heartgrove™
-              </h3>
-
-              <p
-                className="text-sm uppercase tracking-[0.25em] mb-5"
-                style={{
-                  fontFamily: FONTS.heading,
-                  color: GOLD.primary,
-                }}
-              >
-                3–6 Players
-              </p>
-
-              <p
-                className="text-base leading-[1.8] mb-8"
-                style={{
-                  fontFamily: FONTS.body,
-                  color: TEXT.muted,
-                }}
-              >
-                Rebuild the world as 6 Animal Clans & Uncover the Saboteurs.
-                Launching on Kickstarter — join the E-List to be notified first
-                and unlock exclusive backer rewards.
-              </p>
-
-              {/* "Buy" / Coming Soon button */}
-              <button
-                disabled
-                className="w-full uppercase tracking-[0.2em] py-4 font-bold cursor-not-allowed"
-                style={{
-                  fontFamily: FONTS.heading,
-                  fontSize: "0.82rem",
-                  background: GOLD_GRADIENT,
-                  color: "#06080a",
-                  border: "none",
-                  boxShadow: "0 4px 28px rgba(231,170,81,0.25)",
-                  opacity: 0.75,
-                }}
-              >
-                Coming Soon
-              </button>
-
-              <p
-                className="mt-4 uppercase tracking-[0.18em] text-center"
-                style={{
-                  fontFamily: FONTS.heading,
-                  fontSize: "0.6rem",
-                  color: TEXT.dim,
-                }}
-              >
-                Available via Kickstarter · Date TBA
-              </p>
-            </div>
-          </div>
+          
 
           {/* CTA to E-List */}
           <p
