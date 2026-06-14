@@ -5,12 +5,6 @@ import { GoldDivider, SectionEyebrow, CornerOrnaments, InlineGoldRule } from "./
 import logo from "/src/images/MW_Logo.png";
 
 export default function ConfirmationPage() {
-  // Mailchimp injects *|IF|* merge tags server-side before serving the page,
-  // so these template strings are left as-is for Mailchimp to process.
-  // When previewing locally they'll render as literal strings — that's expected.
-  const alreadySubscribed = "*|IF:IS_EMAIL_SUBSCRIBED|*";
-  const elseTag = "*|ELSE:|*";
-  const endIfTag = "*|END:IF|*";
 
   return (
     <>
@@ -88,29 +82,17 @@ export default function ConfirmationPage() {
 
           <InlineGoldRule />
 
-          {/* ── Mailchimp conditional copy ─────────────────────────────── */}
-          {/*
-            Mailchimp processes *|IF|* tags before delivering the page.
-            Both branches are included; Mailchimp strips the inactive one.
-          */}
+          {/* ── Confirmation copy ─────────────────────────────────────── */}
           <div
             className="max-w-md mx-auto mb-10 text-xl leading-[1.9]"
             style={{ fontFamily: FONTS.body, color: TEXT.muted }}
           >
-            {alreadySubscribed}
             <p>
-              You're already subscribed — your profile has been updated.{" "}
-              <span style={{ color: TEXT.cream }}>Thank you!</span>
-            </p>
-            {elseTag}
-            <p>
-              Thank you for subscribing!{" "}
+              Your subscription to our E-List has been confirmed.{" "}
               <span style={{ color: TEXT.cream }}>
-                Look out for news and updates
-              </span>{" "}
-              as we bring Heartgrove to life.
+                Thank you — look out for news and updates!
+              </span>
             </p>
-            {endIfTag}
           </div>
 
           {/* ── Action links ──────────────────────────────────────────── */}
