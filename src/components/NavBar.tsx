@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { GOLD, FONTS } from "../theme";
 
 interface NavLink {
   label: string;
@@ -9,24 +8,23 @@ interface NavLink {
 }
 
 interface NavBarProps {
-  links: NavLink[];       // scroll-to nav items
-  logoSrc: string;        // imported image path
-  shopHref?: string;      // wouter route for the Shop button, defaults to "/shop"
+  links: NavLink[];
+  logoSrc: string;
+  shopHref?: string;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
-const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  links,
+  logoSrc,
+  shopHref = "/shop",
+}) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  // Track which section is currently visible
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
       { root: null, rootMargin: "0px", threshold: 0.5 }
@@ -37,7 +35,6 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
       if (el) observer.observe(el);
     });
 
-    // Also observe hero so nav goes transparent when at top
     const hero = document.getElementById("hero");
     if (hero) observer.observe(hero);
 
@@ -48,7 +45,6 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   }
 
-  // Nav is transparent only while hero is the active section
   const isAtHero = activeSection === "hero" || activeSection === null;
 
   return (
@@ -61,11 +57,16 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
         backdropFilter: "blur(8px)",
         borderBottom: isAtHero
           ? "1px solid transparent"
-          : "1px solid rgba(200,168,75,0.12)",
+          : `1px solid ${GOLD.hairline}`,
       }}
     >
       {/* Logo */}
-      <img src={logoSrc} alt="Mystwood Games logo" className="h-16 cursor-pointer" onClick={() => scrollTo("hero")} />
+      <img
+        src={logoSrc}
+        alt="Mystwood Games logo"
+        className="h-16 cursor-pointer"
+        onClick={() => scrollTo("hero")}
+      />
 
       {/* Desktop nav */}
       <nav className="hidden md:flex items-center gap-10">
@@ -75,52 +76,39 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="relative font-['Cinzel',serif] text-[0.72rem] uppercase tracking-[0.18em] bg-transparent border-0 cursor-pointer transition-colors duration-200"
-              style={{ color: isActive ? "#e8c96a" : "#c8a84b" }}
+              className="relative bg-transparent border-0 cursor-pointer transition-colors duration-200 uppercase tracking-[0.18em]"
+              style={{
+                fontFamily: FONTS.heading,
+                fontSize: "0.72rem",
+                color: isActive ? GOLD.light : GOLD.primary,
+              }}
             >
               {label}
-              {/* Animated underline — visible when active */}
               <span
                 className="absolute -bottom-0.5 left-0 h-px transition-all duration-300 origin-left"
                 style={{
                   width: isActive ? "100%" : "0%",
-                  background:
-                    "linear-gradient(90deg, #c8a84b, #e8c96a)",
+                  background: `linear-gradient(90deg, ${GOLD.primary}, ${GOLD.light})`,
                 }}
               />
             </button>
           );
         })}
 
-        {/* Shop CTA — styled as a gold-bordered button */}
+        {/* Shop CTA */}
         <Link href={shopHref}>
-          <button
-            className="font-['Cinzel',serif] text-[0.68rem] uppercase tracking-[0.18em] px-6 py-2 cursor-pointer transition-all duration-200"
-            style={{
-              border: "1px solid rgba(200,168,75,0.5)",
-              color: "#e8c96a",
-              background: "transparent",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(200,168,75,0.1)";
-              e.currentTarget.style.borderColor = "#e8c96a";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = "rgba(200,168,75,0.5)";
-            }}
-          >
-            Shop
-          </button>
+          <ShopButton />
         </Link>
       </nav>
 
-      {/* Mobile CTA */}
+      {/* Mobile: E-List shortcut */}
       <button
-        className="md:hidden font-['Cinzel',serif] text-[0.65rem] uppercase tracking-widest px-4 py-2 cursor-pointer transition-all duration-200"
+        className="md:hidden uppercase tracking-widest px-4 py-2 cursor-pointer transition-all duration-200"
         style={{
-          border: "1px solid rgba(200,168,75,0.5)",
-          color: "#e8c96a",
+          fontFamily: FONTS.heading,
+          fontSize: "0.65rem",
+          border: `1px solid ${GOLD.muted}`,
+          color: GOLD.light,
           background: "transparent",
         }}
         onClick={() => scrollTo("elist")}
@@ -130,5 +118,26 @@ const NavBar: React.FC<NavBarProps> = ({ links, logoSrc, shopHref = "/shop" }) =
     </header>
   );
 };
+
+/** Extracted so hover state is self-contained */
+function ShopButton() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <button
+      className="uppercase tracking-[0.18em] px-6 py-2 cursor-pointer transition-all duration-200"
+      style={{
+        fontFamily: FONTS.heading,
+        fontSize: "0.68rem",
+        border: `1px solid ${hovered ? GOLD.primary : GOLD.muted}`,
+        color: GOLD.light,
+        background: hovered ? GOLD.faint : "transparent",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      Shop
+    </button>
+  );
+}
 
 export default NavBar;
