@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, BG, TEXT, FONTS } from "../theme";
 import {
@@ -12,6 +12,15 @@ import logo from "/src/images/MW_Logo.png";
 // import boxArt from "/src/images/heartgrove-box.jpg";
 
 export default function ShopPage() {
+  const [, navigate] = useLocation();
+
+  function goToEList() {
+    navigate("/");
+    setTimeout(() => {
+      document.getElementById("elist")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }
+
   return (
     <>
       <GlobalStyles />
@@ -201,29 +210,28 @@ export default function ShopPage() {
             Want to know the moment it drops?
           </p>
 
-          <Link href="/#elist">
-            <button
-              className="uppercase tracking-[0.2em] px-12 py-4 font-bold cursor-pointer transition-all duration-200 hover:-translate-y-0.5"
-              style={{
-                fontFamily: FONTS.heading,
-                fontSize: "0.78rem",
-                border: `1px solid ${GOLD.muted}`,
-                color: GOLD.light,
-                background: "transparent",
-                boxShadow: "none",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = GOLD.faint;
-                e.currentTarget.style.borderColor = GOLD.primary;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.borderColor = GOLD.muted;
-              }}
-            >
-              Join the E-List
-            </button>
-          </Link>
+          <button
+            onClick={goToEList}
+            className="uppercase tracking-[0.2em] px-12 py-4 font-bold cursor-pointer transition-all duration-200 hover:-translate-y-0.5"
+            style={{
+              fontFamily: FONTS.heading,
+              fontSize: "0.78rem",
+              border: `1px solid ${GOLD.muted}`,
+              color: GOLD.light,
+              background: "transparent",
+              boxShadow: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = GOLD.faint;
+              e.currentTarget.style.borderColor = GOLD.primary;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = GOLD.muted;
+            }}
+          >
+            Join the E-List
+          </button>
         </section>
 
         <GoldDivider ornament />
