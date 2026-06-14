@@ -145,7 +145,7 @@ export default function ShopPage() {
                   color: GOLD.primary,
                 }}
               >
-                Board Game · 2–6 Players
+                3–6 Players
               </p>
 
               <p

@@ -1,10 +1,17 @@
+import { useEffect } from "react";
+import { Route, Switch, useLocation } from "wouter";
 import Homepage from "./components/Homepage";
 import Shop from "./components/Shop";
 import Confirmation from "./components/Confirmation";
-import { Route, Switch } from "wouter";
 // import UserPage from "./components/UserPage";
 
 const App = () => {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <>
       <Switch>
