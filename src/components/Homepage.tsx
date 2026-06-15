@@ -1,5 +1,6 @@
 import logo from "/src/images/MW_Logo.png";
-import hgBg from "/src/images/alone-martina-stipan.jpg";
+import hgBg from "/src/images/placeholder-cover-art.png";
+// import hgBg from "/src/images/alone-martina-stipan.jpg";
 // import spaceAntsBg from "/src/images/espacio.jpg";
 // import bobBg from "/src/images/ferre.jpg";
 
