@@ -26,7 +26,7 @@ export function Footer() {
           textShadow: "0 0 16px rgba(231,170,81,0.25)",
         }}
       >
-        Mystwood<span style={{ color: "#7aaa8a" }}>Games</span>
+        Mystwood Games
         <sup style={{ fontSize: "0.5em", verticalAlign: "super" }}>™</sup>
       </div>
 
