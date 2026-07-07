@@ -24,7 +24,8 @@ export function EListSection() {
         </p>
 
         <form
-            action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
+            // action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
+            action="https://e9739e79.sibforms.com/serve/MUIFAI99xLjCfFoOQRlAejY9rSB7boDfp-Y6K_vYUO9UAefsgQuN2nXA7Y5IbQS09YhP7gjdDKMZ9v8gczvoeHy56Mf48o7EIORVIuMe0o9bl4uslbgmsFl4mHlGL2hKnUgJy6MC_n2BNTZgnnshEE5U1-Keur-nTmIrvBwG13_YRtylhZXY2595IcUhzpyK7xW8L7O7VwvZVKY8VQ=="
             method="post"
             target="_blank"
             className="max-w-xs mx-auto text-xl"
