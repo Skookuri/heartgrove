@@ -23,49 +23,109 @@ export function EListSection() {
             Kickstarter campaign will unlock exclusive awards.
         </p>
 
-        <form
+        {/* Vanilla/Mailchimp Form */}
+        {/* <form
             action="https://mystwoodgames.us11.list-manage.com/subscribe/post?u=999a3167de86a820884b66831&amp;id=8f313026ee&amp;f_id=004ae3e1f0"
-            // action="https://e9739e79.sibforms.com/serve/MUIFAI99xLjCfFoOQRlAejY9rSB7boDfp-Y6K_vYUO9UAefsgQuN2nXA7Y5IbQS09YhP7gjdDKMZ9v8gczvoeHy56Mf48o7EIORVIuMe0o9bl4uslbgmsFl4mHlGL2hKnUgJy6MC_n2BNTZgnnshEE5U1-Keur-nTmIrvBwG13_YRtylhZXY2595IcUhzpyK7xW8L7O7VwvZVKY8VQ=="
             method="post"
             target="_blank"
             className="max-w-xs mx-auto text-xl"
         >
-        <input type="text" name="FNAME" placeholder="Name..." required
-            className="w-full mb-4 bg-transparent border-b-2 placeholder-[#7a6845]"
-            style={{
+            <input type="text" name="FNAME" placeholder="Name..." required
+                className="w-full mb-4 bg-transparent border-b-2 placeholder-[#7a6845]"
+                style={{
+                    borderColor: GOLD.primary,
+                    fontFamily: FONTS.body,
+                    color: TEXT.cream,
+                    outline: "none",
+                }}
+            />
+
+            <input
+                type="email"
+                name="EMAIL"
+                placeholder="Email..."
+                required
+                className="w-full mb-6 bg-transparent border-b-2 placeholder-[#7a6845]"
+                style={{
                 borderColor: GOLD.primary,
                 fontFamily: FONTS.body,
                 color: TEXT.cream,
                 outline: "none",
-            }}
-        />
+                }}
+            />
 
-        <input
-            type="email"
-            name="EMAIL"
-            placeholder="Email..."
-            required
-            className="w-full mb-6 bg-transparent border-b-2 placeholder-[#7a6845]"
-            style={{
-            borderColor: GOLD.primary,
-            fontFamily: FONTS.body,
-            color: TEXT.cream,
-            outline: "none",
-            }}
-        />
+            <input
+                //Mailchimp anti-spam
+                type="text"
+                name="b_999a3167de86a820884b66831_8f313026ee"
+                tabIndex={-1}
+                defaultValue=""
+                style={{ position: "absolute", left: "-5000px" }}
+                aria-hidden="true"
+            />
 
-        {/* Mailchimp anti-spam */}
-        <input
-            type="text"
-            name="b_999a3167de86a820884b66831_8f313026ee"
-            tabIndex={-1}
-            defaultValue=""
-            style={{ position: "absolute", left: "-5000px" }}
-            aria-hidden="true"
-        />
+            <GoldButton type="submit">Sign Up Now</GoldButton>
+        </form> */}
 
-        <GoldButton type="submit">Sign Up Now</GoldButton>
-        </form>
+        {/* Brevo Form */}
+        <form
+            id="sib-form"
+            method="POST"
+            action="https://e9739e79.sibforms.com/serve/MUIFAI99xLjCfFoOQRlAejY9rSB7boDfp-Y6K_vYUO9UAefsgQuN2nXA7Y5IbQS09YhP7gjdDKMZ9v8gczvoeHy56Mf48o7EIORVIuMe0o9bl4uslbgmsFl4mHlGL2hKnUgJy6MC_n2BNTZgnnshEE5U1-Keur-nTmIrvBwG13_YRtylhZXY2595IcUhzpyK7xW8L7O7VwvZVKY8VQ=="
+            data-type="subscription"
+            className="max-w-xs mx-auto text-xl"
+            >
+            <input
+                type="text"
+                id="FIRSTNAME"
+                name="FIRSTNAME"
+                placeholder="Name..."
+                autoComplete="off"
+                required
+                className="w-full mb-4 bg-transparent border-b-2 placeholder-[#7a6845]"
+                style={{
+                borderColor: GOLD.primary,
+                fontFamily: FONTS.body,
+                color: TEXT.cream,
+                outline: "none",
+                }}
+            />
+
+            <input
+                type="email"
+                id="EMAIL"
+                name="EMAIL"
+                placeholder="Email..."
+                autoComplete="off"
+                required
+                className="w-full mb-6 bg-transparent border-b-2 placeholder-[#7a6845]"
+                style={{
+                borderColor: GOLD.primary,
+                fontFamily: FONTS.body,
+                color: TEXT.cream,
+                outline: "none",
+                }}
+            />
+
+            {/* Required hidden fields */}
+            <input
+                type="text"
+                name="email_address_check"
+                defaultValue=""
+                style={{ display: "none" }}
+                tabIndex={-1}
+            />
+
+            <input
+                type="hidden"
+                name="locale"
+                value="en"
+            />
+
+            <GoldButton type="submit">
+                Sign Up Now
+            </GoldButton>
+            </form>
     </section>
     );
 }
