@@ -35,7 +35,7 @@ const Slide: React.FC<SlideProps> = ({
       />
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-black/35" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 max-w-3xl">

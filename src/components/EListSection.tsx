@@ -122,6 +122,52 @@ export function EListSection() {
                 value="en"
             />
 
+            {/* GDPR Thing */}
+            {/* 
+                <p
+                className="text-xs mt-4 mb-3 text-left"
+                style={{
+                    color: TEXT.cream,
+                    opacity: 0.8,
+                    fontFamily: FONTS.body,
+                }}
+                >
+                We use Brevo as our marketing platform. By submitting this form,
+                you agree that the personal information you provide will be
+                transferred to Brevo for processing in accordance with{" "}
+                <a
+                    href="https://www.brevo.com/en/legal/privacypolicy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                >
+                    Brevo's Privacy Policy
+                </a>.
+                </p>
+            <div className="flex items-start gap-3 mb-6">
+                <input
+                    type="checkbox"
+                    id="GDPR_CONSENT"
+                    name="GDPR_CONSENT"
+                    value="1"
+                    required
+                    className="mt-1"
+                />
+
+                
+                <label
+                    htmlFor="GDPR_CONSENT"
+                    className="leading-relaxed"
+                    style={{
+                    color: TEXT.cream,
+                    fontFamily: FONTS.body,
+                    }}
+                >
+                    I agree to receive Mystwood Games' newsletters and accept the privacy
+                    statement.
+                </label>
+            </div> */}
+
             <GoldButton type="submit">
                 Sign Up Now
             </GoldButton>

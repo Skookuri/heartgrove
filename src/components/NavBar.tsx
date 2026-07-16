@@ -56,7 +56,7 @@ const NavBar: React.FC<NavBarProps> = ({
           : "rgba(4,5,8,0.96)",
         backdropFilter: "blur(8px)",
         borderBottom: isAtHero
-          ? "1px solid transparent"
+          ? "0px solid transparent"
           : `1px solid ${GOLD.hairline}`,
       }}
     >
