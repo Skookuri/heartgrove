@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
+import type { SanityDocument } from "@sanity/client";
+import { client } from "../lib/sanity";
+
 // import logo from "/src/images/MW_Logo.png";
-import logo from "/src/images/Mystwood-Games-Logo-overlapping.png"
-// import hgBg from "/src/images/placeholder-cover-art.png";
+// import logo from "/src/images/Mystwood-Games-Logo-overlapping.png"
+import logo from "/src/images/MW_Logo_Whiter.png";
 import hgBg from "/src/images/hg-cover-clean.jpeg";
-// import hgBg from "/src/images/alone-martina-stipan.jpg";
 // import spaceAntsBg from "/src/images/espacio.jpg";
 // import bobBg from "/src/images/ferre.jpg";
 
@@ -17,6 +21,15 @@ import { EListSection } from "./EListSection";
 import { Footer } from "./Footer";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
+const POSTS_QUERY = `*[
+    _type == "post"
+    && defined(slug.current)
+    ]|order(publishedAt desc)[0...12]{
+    _id,
+    title,
+    slug,
+    publishedAt
+}`;
 
 const NAV_LINKS: { label: string; id: string }[] = [
     { label: "Our Game", id: "hero" },
@@ -74,6 +87,14 @@ const FEATURES: FeatureCardData[] = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Homepage() {
+    const [posts, setPosts] = useState<SanityDocument[]>([]);
+
+    useEffect(() => {
+        client
+        .fetch<SanityDocument[]>(POSTS_QUERY)
+        .then(setPosts);
+    }, []);
+    
     return (
     <>
         <GlobalStyles />
@@ -101,6 +122,22 @@ export default function Homepage() {
         <GoldDivider ornament />
 
         <EListSection />
+
+        <ul className="flex flex-col gap-y-4">
+            {posts.map((post) => (
+                <li key={post._id} className="hover:underline">
+                    <Link href={`/post/${post.slug.current}`}>
+                    <h2 className="text-xl font-semibold">
+                        {post.title}
+                    </h2>
+
+                    <p>
+                        {new Date(post.publishedAt).toLocaleDateString()}
+                    </p>
+                    </Link>
+                </li>
+            ))}
+        </ul>
 
         <Footer />
         </div>

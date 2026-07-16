@@ -7,7 +7,7 @@ import {
     SectionHeading,
     CornerOrnaments,
 } from "./ui";
-import logo from "/src/images/MW_Logo.png";
+import logo from "/src/images/MW_Logo_Whiter.png";
 import peacock from "/src/images/peacock_transparent.png"
 
 // ─── Product data ─────────────────────────────────────────────────────────────
