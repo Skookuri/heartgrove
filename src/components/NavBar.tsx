@@ -10,13 +10,11 @@ interface NavLink {
 interface NavBarProps {
   links: NavLink[];
   logoSrc: string;
-  shopHref?: string;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
   links,
   logoSrc,
-  shopHref = "/shop",
 }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
@@ -92,11 +90,16 @@ const NavBar: React.FC<NavBarProps> = ({
                 }}
               />
             </button>
+
+			
           );
         })}
 
+		{/* Blog */}
+		{/* <Link href="/blog">Blog</Link> */}
+
         {/* Shop CTA */}
-        <Link href={shopHref}>
+        <Link href="/shop">
           <ShopButton />
         </Link>
       </nav>

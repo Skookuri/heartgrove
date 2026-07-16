@@ -4,6 +4,7 @@ import Homepage from "./components/Homepage";
 import Shop from "./components/Shop";
 import Confirmation from "./components/Confirmation";
 import Blog from "./components/Blog";
+import { Analytics } from "@vercel/analytics/react"
 // import UserPage from "./components/UserPage";
 
 const App = () => {
@@ -29,6 +30,8 @@ const App = () => {
           </Route>
         }
       </Switch>
+
+      <Analytics/>
     </>
   );
 };

@@ -100,7 +100,7 @@ export default function Homepage() {
         <GlobalStyles />
 
         <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: "#06080a", color: "#e1d5b1" }}>
-        <NavBar links={NAV_LINKS} logoSrc={logo} shopHref="/shop" />
+        <NavBar links={NAV_LINKS} logoSrc={logo} />
 
         <section id="hero">
             <Slideshow slides={HERO_SLIDES} autoplayInterval={5500} />
