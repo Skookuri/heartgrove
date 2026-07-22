@@ -4,65 +4,408 @@ import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url
 import type { SanityDocument } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
 import { client } from "../lib/sanity";
+import { GlobalStyles } from "./GlobalStyles";
+import { GOLD, GOLD_GRADIENT, GOLD_RULE_GRADIENT, TEXT, FONTS } from "../theme";
+import { GoldDivider, CornerOrnaments } from "./ui";
+import logo from "/src/images/MW_Logo_Whiter.png";
+import { Footer } from "./Footer";
 
+// ─── GROQ — expand author and ctaBtn references ───────────────────────────────
 const POST_QUERY = `
-  *[_type == "post" && slug.current == $slug][0]
+	*[_type == "post" && slug.current == $slug][0] {
+	title,
+	publishedAt,
+	image,
+	body,
+	"author": author-> {
+		name,
+		image
+	},
+	"ctaBtn": ctaBtn-> {
+		text,
+		url
+	}
+	}
 `;
 
 const { projectId, dataset } = client.config();
 
 const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? createImageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
+	projectId && dataset
+		? createImageUrlBuilder({ projectId, dataset }).image(source)
+		: null;
 
+// ─── PortableText component overrides ────────────────────────────────────────
+const ptComponents = {
+	block: {
+		normal: ({ children }: { children?: React.ReactNode }) => (
+			<p
+			className="mb-5 text-lg leading-[1.9]"
+			style={{ fontFamily: FONTS.body, color: TEXT.muted }}
+			>
+			{children}
+			</p>
+		),
+		h1: ({ children }: { children?: React.ReactNode }) => (
+			<h1
+			className="font-bold mt-10 mb-4"
+			style={{
+				fontFamily: FONTS.display,
+				fontSize: "clamp(1.4rem, 3vw, 2rem)",
+				color: TEXT.cream,
+			}}
+			>
+			{children}
+			</h1>
+		),
+		h2: ({ children }: { children?: React.ReactNode }) => (
+			<h2
+			className="font-bold mt-8 mb-3"
+			style={{
+				fontFamily: FONTS.display,
+				fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
+				color: TEXT.cream,
+			}}
+			>
+			{children}
+			</h2>
+		),
+		h3: ({ children }: { children?: React.ReactNode }) => (
+			<h3
+			className="font-bold mt-6 mb-2 uppercase tracking-[0.1em]"
+			style={{
+				fontFamily: FONTS.heading,
+				fontSize: "0.9rem",
+				color: GOLD.primary,
+			}}
+			>
+			{children}
+			</h3>
+		),
+		blockquote: ({ children }: { children?: React.ReactNode }) => (
+			<blockquote
+			className="my-6 pl-5 italic"
+			style={{
+				borderLeft: `2px solid ${GOLD.muted}`,
+				fontFamily: FONTS.body,
+				color: TEXT.muted,
+				fontSize: "1.1rem",
+			}}
+			>
+			{children}
+			</blockquote>
+		),
+		},
+		marks: {
+		strong: ({ children }: { children?: React.ReactNode }) => (
+			<strong style={{ color: TEXT.cream, fontWeight: 600 }}>{children}</strong>
+		),
+		em: ({ children }: { children?: React.ReactNode }) => (
+			<em style={{ color: GOLD.light }}>{children}</em>
+		),
+		link: ({ value, children }: { value?: { href: string }; children?: React.ReactNode }) => (
+			<a
+			href={value?.href}
+			target="_blank"
+			rel="noopener noreferrer"
+			style={{ color: GOLD.primary, textDecoration: "underline", textUnderlineOffset: 3 }}
+			>
+			{children}
+			</a>
+		),
+		},
+		list: {
+		bullet: ({ children }: { children?: React.ReactNode }) => (
+			<ul
+			className="mb-5 pl-5 space-y-2"
+			style={{ fontFamily: FONTS.body, color: TEXT.muted, fontSize: "1.05rem" }}
+			>
+			{children}
+			</ul>
+		),
+		number: ({ children }: { children?: React.ReactNode }) => (
+			<ol
+			className="mb-5 pl-5 space-y-2 list-decimal"
+			style={{ fontFamily: FONTS.body, color: TEXT.muted, fontSize: "1.05rem" }}
+			>
+			{children}
+			</ol>
+		),
+		},
+		listItem: {
+		bullet: ({ children }: { children?: React.ReactNode }) => (
+			<li style={{ listStyleType: "none" }}>
+			<span style={{ color: GOLD.primary, marginRight: 8 }}>✦</span>
+			{children}
+			</li>
+		),
+		number: ({ children }: { children?: React.ReactNode }) => (
+			<li>{children}</li>
+		),
+	},
+};
+
+// ─── Component ───────────────────────────────────────────────────────────────
 export default function Post() {
-  const [, params] = useRoute("/post/:slug");
-  const [post, setPost] = useState<SanityDocument | null>(null);
+	const [, params] = useRoute("/blog/:slug");
+	const [post, setPost] = useState<SanityDocument | null>(null);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!params?.slug) return;
+	useEffect(() => {
+		if (!params?.slug) return;
+		client
+			.fetch<SanityDocument>(POST_QUERY, { slug: params.slug })
+			.then((data) => {
+			setPost(data);
+			setLoading(false);
+			});
+	}, [params?.slug]);
 
-    client
-      .fetch<SanityDocument>(POST_QUERY, { slug: params.slug })
-      .then(setPost);
-  }, [params?.slug]);
+	// ── Loading state ──────────────────────────────────────────────────────────
+	if (loading) {
+		return (
+			<>
+			<GlobalStyles />
+			<div
+				className="min-h-screen flex items-center justify-center"
+				style={{ background: "#06080a" }}
+			>
+				<p
+				className="uppercase tracking-[0.3em]"
+				style={{ fontFamily: FONTS.heading, fontSize: "0.7rem", color: GOLD.muted }}
+				>
+				Loading...
+				</p>
+			</div>
+			</>
+		);
+	}
 
-  if (!post) {
-    return <p className="p-8">Loading...</p>;
-  }
+	// ── 404 state ──────────────────────────────────────────────────────────────
+	if (!post) {
+		return (
+		<>
+			<GlobalStyles />
+			<div
+			className="min-h-screen flex flex-col items-center justify-center gap-4"
+			style={{ background: "#06080a" }}
+			>
+			<p
+				className="uppercase tracking-[0.3em]"
+				style={{ fontFamily: FONTS.heading, fontSize: "0.7rem", color: GOLD.muted }}
+			>
+				Post not found
+			</p>
+			<Link href="/">
+				<span style={{ color: GOLD.primary, fontFamily: FONTS.heading, fontSize: "0.7rem" }}>
+				← Back Home
+				</span>
+			</Link>
+			</div>
+		</>
+		);
+	}
 
-  const postImageUrl = post.image
-    ? urlFor(post.image)?.width(550).height(310).url()
-    : null;
+	const postImageUrl = post.image
+		? urlFor(post.image)?.width(1200).height(500).url()
+		: null;
 
-  return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
-      <Link href="/">
-        ← Back to posts
-      </Link>
+	const authorImageUrl = post.author?.image
+		? urlFor(post.author.image)?.width(80).height(80).url()
+		: null;
 
-      {postImageUrl && (
-        <img
-          src={postImageUrl}
-          alt={post.title}
-          className="aspect-video rounded-xl"
-        />
-      )}
+	return (
+		<>
+		<GlobalStyles />
 
-      <h1 className="text-4xl font-bold">
-        {post.title}
-      </h1>
+		<div
+			className="min-h-screen flex flex-col overflow-x-hidden"
+			style={{ background: "#06080a", color: TEXT.cream }}
+		>
+			{/* ── Nav ──────────────────────────────────────────────────────── */}
+			<header
+			className="w-full flex items-center justify-between px-8 py-3"
+			style={{
+				background: "rgba(4,5,8,0.96)",
+				backdropFilter: "blur(8px)",
+				borderBottom: `1px solid ${GOLD.hairline}`,
+				position: "sticky",
+				top: 0,
+				zIndex: 50,
+			}}
+			>
+			<Link href="/">
+				<img src={logo} alt="Mystwood Games" className="h-16 cursor-pointer" />
+			</Link>
 
-      <div className="prose">
-        <p>
-          Published: {new Date(post.publishedAt).toLocaleDateString()}
-        </p>
+			<Link href="/">
+				<button
+				className="uppercase tracking-[0.18em] px-6 py-2 cursor-pointer transition-all duration-200"
+				style={{
+					fontFamily: FONTS.heading,
+					fontSize: "0.68rem",
+					border: `1px solid ${GOLD.muted}`,
+					color: GOLD.light,
+					background: "transparent",
+				}}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.background = GOLD.faint;
+					e.currentTarget.style.borderColor = GOLD.primary;
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.background = "transparent";
+					e.currentTarget.style.borderColor = GOLD.muted;
+				}}
+				>
+				← Back Home
+				</button>
+			</Link>
+			</header>
 
-        {Array.isArray(post.body) && (
-          <PortableText value={post.body} />
-        )}
-      </div>
-    </main>
-  );
+			{/* ── Hero image ───────────────────────────────────────────────── */}
+			{postImageUrl && (
+			<div className="w-full overflow-hidden" style={{ maxHeight: 420 }}>
+				<img
+				src={postImageUrl}
+				alt={post.title}
+				className="w-full object-cover object-top"
+				style={{ display: "block" }}
+				/>
+			</div>
+			)}
+
+			{/* ── Article ──────────────────────────────────────────────────── */}
+			<article
+			className="relative flex-1 w-full max-w-3xl mx-auto px-8 py-16 overflow-hidden"
+			>
+			<CornerOrnaments />
+
+			{/* Date */}
+			<p
+				className="uppercase tracking-[0.28em] mb-5"
+				style={{
+				fontFamily: FONTS.heading,
+				fontSize: "0.62rem",
+				color: GOLD.primary,
+				}}
+			>
+				{new Date(post.publishedAt).toLocaleDateString("en-US", {
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+				})}
+			</p>
+
+			{/* Title */}
+			<h1
+				className="font-bold leading-tight mb-6"
+				style={{
+				fontFamily: FONTS.display,
+				fontSize: "clamp(1.8rem, 4vw, 3rem)",
+				color: TEXT.cream,
+				textShadow: "0 2px 24px rgba(231,170,81,0.15)",
+				}}
+			>
+				{post.title}
+			</h1>
+
+			{/* Gold rule */}
+			<div
+				className="w-full mb-8"
+				style={{
+				height: 1,
+				background: GOLD_RULE_GRADIENT,
+				}}
+			/>
+
+			{/* Author */}
+			{post.author && (
+				<div className="flex items-center gap-4 mb-10">
+				{authorImageUrl && (
+					<img
+					src={authorImageUrl}
+					alt={post.author.name}
+					className="rounded-full object-cover flex-shrink-0"
+					style={{
+						width: 44,
+						height: 44,
+						border: `1px solid ${GOLD.muted}`,
+					}}
+					/>
+				)}
+				<div>
+					<p
+					className="uppercase tracking-[0.18em]"
+					style={{
+						fontFamily: FONTS.heading,
+						fontSize: "0.6rem",
+						color: TEXT.dim,
+					}}
+					>
+					Written by
+					</p>
+					<p
+					style={{
+						fontFamily: FONTS.heading,
+						fontSize: "0.78rem",
+						color: GOLD.light,
+					}}
+					>
+					{post.author.name}
+					</p>
+				</div>
+				</div>
+			)}
+
+			{/* Body */}
+			{Array.isArray(post.body) && (
+				// ts-expect-error — ptComponents typing is loose but correct at runtime
+				<PortableText value={post.body} components={ptComponents} />
+			)}
+
+			{/* CTA Button */}
+			{post.ctaBtn?.url && (
+			<>
+				<div
+				className="w-full my-10"
+				style={{ height: 1, background: GOLD_RULE_GRADIENT }}
+				/>
+				<div className="flex justify-center py-8">
+				{/* <p
+					className="uppercase tracking-[0.25em] mb-4"
+					style={{
+						fontFamily: FONTS.heading,
+						fontSize: "0.62rem",
+						color: GOLD.primary,
+					}}
+					>
+					Interested in More?
+				</p> */}
+				<a
+					href={post.ctaBtn.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					className="inline-block uppercase tracking-[0.2em] font-bold px-10 py-4 transition-all duration-200 hover:-translate-y-0.5 no-underline"
+					style={{
+					fontFamily: FONTS.heading,
+					fontSize: "0.78rem",
+					background: GOLD_GRADIENT,
+					color: "#06080a",
+					border: "none",
+					boxShadow: "0 4px 28px rgba(231,170,81,0.3)",
+					}}
+				>
+					{post.ctaBtn.text}
+				</a>
+				</div>
+			</>
+			)}
+			</article>
+
+			<GoldDivider ornament />
+
+			<Footer />
+		</div>
+		</>
+	);
 }

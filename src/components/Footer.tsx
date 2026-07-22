@@ -2,10 +2,10 @@ import { GOLD, BG, TEXT, FONTS } from "../theme";
 
 const FOOTER_LINKS = [
   "Games",
-  "About",
-  "Press Kit",
-  "Contact",
-  "Privacy Policy",
+  // "About",
+  // "Press Kit",
+  // "Contact",
+  // "Privacy Policy",
 ];
 
 export function Footer() {

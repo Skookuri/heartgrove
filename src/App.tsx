@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/shop" component={Shop} />
         <Route path="/confirmation" component={Confirmation} />
         {/* <Route path="/users/:name" component={UserPage} /> */}
-        <Route path="/post/:slug" component={Blog} />
+        <Route path="/blog/:slug" component={Blog} />
 
         {/* Shows a 404 error if the path doesn't match anything */}
         {
