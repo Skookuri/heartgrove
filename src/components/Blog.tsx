@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import type { SanityDocument } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
-import { client } from "../lib/sanity";
+import { client, previewClient } from "../lib/sanity";
+import { isPreviewMode } from "../lib/preview";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, GOLD_RULE_GRADIENT, TEXT, FONTS } from "../theme";
 import { GoldDivider, CornerOrnaments } from "./ui";
@@ -150,16 +151,31 @@ export default function Post() {
 	const [, params] = useRoute("/blog/:slug");
 	const [post, setPost] = useState<SanityDocument | null>(null);
 	const [loading, setLoading] = useState(true);
-
+	
+	const isPreview = isPreviewMode();
+	console.log("isPreview:", isPreview, window.location.search);
 	useEffect(() => {
 		if (!params?.slug) return;
-		client
+		const activeClient = isPreview ? previewClient : client;
+
+		activeClient
 			.fetch<SanityDocument>(POST_QUERY, { slug: params.slug })
 			.then((data) => {
 			setPost(data);
 			setLoading(false);
 			});
-	}, [params?.slug]);
+		}, [params?.slug, isPreview]);
+	// 	client
+	// 		.fetch<SanityDocument>(POST_QUERY, { slug: params.slug })
+	// 		// Tells Sanity to show the live typing draft if it exists, otherwise fall back to published
+    // 		perspective: 'previewDrafts',
+	// 		// Always use false here so your preview updates instantly on every single keystroke
+    // 		useCdn: false,  
+	// 		.then((data) => {
+	// 		setPost(data);
+	// 		setLoading(false);
+	// 		});
+	// }, [params?.slug]);
 
 	// ── Loading state ──────────────────────────────────────────────────────────
 	if (loading) {
@@ -211,7 +227,7 @@ export default function Post() {
 		: null;
 
 	const authorImageUrl = post.author?.image
-		? urlFor(post.author.image)?.width(80).height(80).url()
+		? urlFor(post.author.image)?.width(200).height(200).quality(100).url()
 		: null;
 
 	return (
@@ -327,8 +343,8 @@ export default function Post() {
 					alt={post.author.name}
 					className="rounded-full object-cover flex-shrink-0"
 					style={{
-						width: 44,
-						height: 44,
+						width: 100,
+						height: 100,
 						border: `1px solid ${GOLD.muted}`,
 					}}
 					/>
@@ -347,7 +363,7 @@ export default function Post() {
 					<p
 					style={{
 						fontFamily: FONTS.heading,
-						fontSize: "0.78rem",
+						fontSize: "1rem",
 						color: GOLD.light,
 					}}
 					>

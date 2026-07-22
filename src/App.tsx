@@ -6,6 +6,8 @@ import Confirmation from "./components/Confirmation";
 import Blog from "./components/Blog";
 import { Analytics } from "@vercel/analytics/react"
 // import UserPage from "./components/UserPage";
+import { enableVisualEditing } from "@sanity/visual-editing";
+import { isPreviewMode } from "./lib/preview";
 
 const App = () => {
   const [location] = useLocation();
@@ -13,6 +15,17 @@ const App = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+
+
+  // stuff for preview mode on sanity
+  
+  useEffect(() => {
+    const isPreview = isPreviewMode();
+    if (!isPreview) return;
+
+    const disable = enableVisualEditing({ zIndex: 999999 });
+    return () => disable();
+  }, []);
 
   return (
     <>
