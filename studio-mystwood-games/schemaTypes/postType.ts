@@ -12,8 +12,9 @@ export const postType = defineType({
     }),
     defineField({
       name: 'author',
-      type: 'string',
-      validation: (rule) => rule.required(),
+      title: 'Author',
+      type: 'reference',
+      to: [{ type: 'author' }]
     }),
     defineField({
       name: 'slug',
@@ -36,5 +37,11 @@ export const postType = defineType({
       type: 'array',
       of: [{type: 'block'}],
     }),
+    defineField({
+      name: 'ctaBtn',
+      title: 'CTA Button',
+      type: 'reference',
+      to: [{ type: 'ctaBtn' }]
+    })
   ],
 })
