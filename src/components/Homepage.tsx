@@ -1,8 +1,3 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
-import type { SanityDocument } from "@sanity/client";
-import { client } from "../lib/sanity";
-
 // import logo from "/src/images/MW_Logo.png";
 // import logo from "/src/images/Mystwood-Games-Logo-overlapping.png"
 import logo from "/src/images/MW_Logo_Whiter.png";
@@ -16,20 +11,21 @@ import Slideshow from "./Slideshow";
 import { SlideData } from "./Slide";
 import { GoldDivider } from "./ui";
 import { TaglineBand } from "./TaglineBand";
-import { FeaturesGrid, FeatureCardData } from "./FeatureCard";
+// import { FeaturesGrid, FeatureCardData } from "./FeatureCard";
+import { BlogGrid } from "./BlogGrid";
 import { EListSection } from "./EListSection";
 import { Footer } from "./Footer";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-const POSTS_QUERY = `*[
-    _type == "post"
-    && defined(slug.current)
-    ]|order(publishedAt desc)[0...12]{
-    _id,
-    title,
-    slug,
-    publishedAt
-}`;
+// const POSTS_QUERY = `*[
+//     _type == "post"
+//     && defined(slug.current)
+//     ]|order(publishedAt desc)[0...12]{
+//     _id,
+//     title,
+//     slug,
+//     publishedAt
+// }`;
 
 const NAV_LINKS: { label: string; id: string }[] = [
     { label: "Our Game", id: "hero" },
@@ -66,34 +62,27 @@ const HERO_SLIDES: SlideData[] = [
     // },
 ];
 
-const FEATURES: FeatureCardData[] = [
-    {
-        icon: "🌿",
-        heading: "Cooperative Rebuilding",
-        body: "Gather resources and trade to rebuild Heartgrove.",
-    },
-    {
-        icon: "🎭",
-        heading: "Hidden Roles",
-        body: "Expose the saboteurs before it's too late.",
-    },
-    {
-        icon: "🐾",
-        heading: "Magical Factions",
-        body: "Play as unique animal clans with powerful abilities.",
-    },
-];
+// const FEATURES: FeatureCardData[] = [
+//     {
+//         icon: "🌿",
+//         heading: "Cooperative Rebuilding",
+//         body: "Gather resources and trade to rebuild Heartgrove.",
+//     },
+//     {
+//         icon: "🎭",
+//         heading: "Hidden Roles",
+//         body: "Expose the saboteurs before it's too late.",
+//     },
+//     {
+//         icon: "🐾",
+//         heading: "Magical Factions",
+//         body: "Play as unique animal clans with powerful abilities.",
+//     },
+// ];
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Homepage() {
-    const [posts, setPosts] = useState<SanityDocument[]>([]);
-
-    useEffect(() => {
-        client
-        .fetch<SanityDocument[]>(POSTS_QUERY)
-        .then(setPosts);
-    }, []);
     
     return (
     <>
@@ -117,27 +106,13 @@ export default function Homepage() {
 
         <GoldDivider />
 
-        <FeaturesGrid features={FEATURES} />
+        <BlogGrid />
+
+        {/* <FeaturesGrid features={FEATURES} /> */}
 
         <GoldDivider ornament />
 
         <EListSection />
-
-        <ul className="flex flex-col gap-y-4">
-            {posts.map((post) => (
-                <li key={post._id} className="hover:underline">
-                    <Link href={`/post/${post.slug.current}`}>
-                    <h2 className="text-xl font-semibold">
-                        {post.title}
-                    </h2>
-
-                    <p>
-                        {new Date(post.publishedAt).toLocaleDateString()}
-                    </p>
-                    </Link>
-                </li>
-            ))}
-        </ul>
 
         <Footer />
         </div>

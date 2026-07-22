@@ -40,7 +40,7 @@ const Slide: React.FC<SlideProps> = ({
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 max-w-3xl">
         <h2
-          className="font-normal tracking-tight leading-none mb-4 text-4xl"
+          className="font-bold tracking-tight leading-none mb-4 text-4xl"
           style={{
             fontFamily: FONTS.display,
             color: TEXT.cream,
