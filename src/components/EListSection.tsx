@@ -4,14 +4,14 @@ import {
     SectionEyebrow,
     SectionHeading,
     InlineGoldRule,
-    CornerOrnaments,
+    // CornerOrnaments,
 } from "./ui";
 import { GOLD, BG, TEXT, FONTS } from "../theme";
 
 export function EListSection() {
     return (
     <section id="elist" className="relative py-28 px-8 text-center overflow-hidden" style={{ background: BG.radialTop }}>
-        <CornerOrnaments />
+        {/* <CornerOrnaments /> */}
 
         <SectionEyebrow text="Stay Connected" />
         <SectionHeading>Join the E-List</SectionHeading>

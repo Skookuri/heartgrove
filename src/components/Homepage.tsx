@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async"; // SEO
 // import logo from "/src/images/MW_Logo.png";
 // import logo from "/src/images/Mystwood-Games-Logo-overlapping.png"
 import logo from "/src/images/MW_Logo_Whiter.png";
@@ -86,6 +87,14 @@ export default function Homepage() {
     
     return (
     <>
+        <Helmet>
+            <title>Mystwood Games™ | Bridging Genres. Bridging People.</title>
+            <meta
+            name="description"
+            content="Fun, genre-bridging asymmetrical tabletop games designed to encourage high interplayer interaction and strategic thinking."
+            />
+        </Helmet>
+        
         <GlobalStyles />
 
         <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: "#06080a", color: "#e1d5b1" }}>

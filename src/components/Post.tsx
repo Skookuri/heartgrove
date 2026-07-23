@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Link, useRoute } from "wouter";
 import { useEffect, useState } from "react";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
@@ -7,7 +8,7 @@ import { client, previewClient } from "../lib/sanity";
 import { isPreviewMode } from "../lib/preview";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, GOLD_RULE_GRADIENT, TEXT, FONTS } from "../theme";
-import { GoldDivider, CornerOrnaments } from "./ui";
+import { GoldDivider } from "./ui";
 import logo from "/src/images/MW_Logo_Whiter.png";
 import { Footer } from "./Footer";
 
@@ -309,6 +310,27 @@ export default function Post() {
 	return (
 		<>
 		<GlobalStyles />
+		{post && (
+		<Helmet>
+			<title>{post.title} | Mystwood Games</title>
+			<meta
+			name="description"
+			content={post.excerpt || `Read ${post.title} on the Mystwood Games blog.`}
+			/>
+
+			{/* Open Graph */}
+			<meta property="og:title" content={`${post.title} | Mystwood Games`} />
+			<meta property="og:description" content={post.excerpt || post.title} />
+			{postImageUrl && <meta property="og:image" content={postImageUrl} />}
+			<meta property="og:type" content="article" />
+
+			{/* Twitter/X card */}
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={`${post.title} | Mystwood Games`} />
+			<meta name="twitter:description" content={post.excerpt || post.title} />
+			{postImageUrl && <meta name="twitter:image" content={postImageUrl} />}
+		</Helmet>
+		)}
 
 		<div
 			className="min-h-screen flex flex-col overflow-x-hidden"
@@ -370,7 +392,7 @@ export default function Post() {
 			<article
 			className="relative flex-1 w-full max-w-3xl mx-auto px-8 py-16 overflow-hidden"
 			>
-			<CornerOrnaments />
+			{/* <CornerOrnaments /> */}
 
 			{/* Date */}
 			<p

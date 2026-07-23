@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async"; // SEO
 import { Link, useLocation } from "wouter";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, BG, TEXT, FONTS } from "../theme";
@@ -5,7 +6,7 @@ import {
     GoldDivider,
     SectionEyebrow,
     SectionHeading,
-    CornerOrnaments,
+    // CornerOrnaments,
 } from "./ui";
 import logo from "/src/images/MW_Logo_Whiter.png";
 import peacock from "/src/images/peacock_transparent.png"
@@ -163,7 +164,12 @@ export default function ShopPage() {
 
   return (
     <>
-      <GlobalStyles />
+		<Helmet>
+			<title>Shop | Mystwood Games</title>
+			<meta name="description" content="Get your copy of Revival of Heartgrove™ and support the game's development." />
+		</Helmet>
+
+		<GlobalStyles />
 
       <div
         className="min-h-screen flex flex-col overflow-x-hidden"
@@ -217,7 +223,7 @@ export default function ShopPage() {
           className="relative flex-1 flex flex-col items-center justify-center py-28 px-8 text-center overflow-hidden"
           style={{ background: BG.radialWarm }}
         >
-          <CornerOrnaments />
+          {/* <CornerOrnaments /> */}
 
           {/* Faint watermark */}
           <span

@@ -1,19 +1,24 @@
+import { Helmet } from "react-helmet-async"; // SEO
 import { Link } from "wouter";
 import { GlobalStyles } from "./GlobalStyles";
 import { GOLD, GOLD_GRADIENT, BG, TEXT, FONTS } from "../theme";
-import { GoldDivider, SectionEyebrow, CornerOrnaments, InlineGoldRule } from "./ui";
+import { GoldDivider, SectionEyebrow, InlineGoldRule } from "./ui";
 import logo from "/src/images/MW_Logo.png";
 
 export default function ConfirmationPage() {
 
   return (
     <>
-      <GlobalStyles />
+		<Helmet>
+		<title>Sign-Up Confirmed | Mystwood Games</title>
+		<meta name="description" content="Your Mystwood Games E-List Sign-Up has been confirmed." />
+		</Helmet>
+		<GlobalStyles />
 
-      <div
-        className="min-h-screen flex flex-col overflow-x-hidden"
-        style={{ background: "#06080a", color: TEXT.cream }}
-      >
+		<div
+			className="min-h-screen flex flex-col overflow-x-hidden"
+			style={{ background: "#06080a", color: TEXT.cream }}
+		>
         {/* ── Top bar ──────────────────────────────────────────────────── */}
         <header
           className="w-full flex items-center justify-center px-8 py-4"
@@ -38,7 +43,7 @@ export default function ConfirmationPage() {
           className="relative flex-1 flex flex-col items-center justify-center py-28 px-6 text-center overflow-hidden"
           style={{ background: BG.radialWarm }}
         >
-          <CornerOrnaments />
+          {/* <CornerOrnaments /> */}
 
           {/* Faint watermark */}
           <span
