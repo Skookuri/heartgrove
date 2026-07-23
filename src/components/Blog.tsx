@@ -17,7 +17,7 @@ const POST_QUERY = `
 	title,
 	publishedAt,
 	image,
-	altTxtBanner,
+	bannerAlt,
 	body,
 	"author": author-> {
 		name,
@@ -233,7 +233,7 @@ export default function Post() {
 		? urlFor(post.author.image)?.width(200).height(200).quality(100).url()
 		: null;
 
-	console.log("alt text time:", post.altTxtBanner);
+	console.log("alt text time:", post.bannerAlt);
 	return (
 		<>
 		<GlobalStyles />
@@ -287,7 +287,7 @@ export default function Post() {
 			<div className="w-full overflow-hidden" style={{ maxHeight: 420 }}>
 				<img
 					src={postImageUrl}
-					alt={post.altTxtBanner}
+					alt={post.bannerAlt}
 					className="w-full object-cover object-top"
 					style={{ display: "block" }}
 				/>
