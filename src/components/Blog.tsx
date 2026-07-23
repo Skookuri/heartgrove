@@ -18,7 +18,19 @@ const POST_QUERY = `
 	publishedAt,
 	image,
 	bannerAlt,
-	body,
+	body[] {
+		...,
+		_type == "image" => {
+		...,
+		asset-> {
+			_id,
+			url,
+			metadata { lqip }
+		},
+		alt,
+		caption
+		}
+	},
 	"author": author-> {
 		name,
 		image
@@ -38,6 +50,18 @@ const urlFor = (source: SanityImageSource) =>
 		: null;
 
 // ─── PortableText component overrides ────────────────────────────────────────
+type PortableTextImageValue = {
+	asset?: {
+		_id: string;
+		url: string;
+		metadata?: { lqip?: string };
+	};
+	alt?: string;
+	caption?: string;
+	hotspot?: { x: number; y: number; height: number; width: number };
+	crop?: { top: number; bottom: number; left: number; right: number };
+};
+
 const ptComponents = {
 	block: {
 		normal: ({ children }: { children?: React.ReactNode }) => (
@@ -144,6 +168,54 @@ const ptComponents = {
 		number: ({ children }: { children?: React.ReactNode }) => (
 			<li>{children}</li>
 		),
+	},
+	types: {
+	image: ({ value }: { value: PortableTextImageValue }) => {
+		// Return null if the image asset object is completely missing
+		if (!value?.asset) return null;
+
+		const imageUrl = urlFor(value)
+		?.width(1400)
+		.quality(90)
+		.auto("format")
+		.url();
+
+		if (!imageUrl) return null;
+
+		return (
+		<figure
+			className="my-10 overflow-hidden"
+			style={{
+			border: `1px solid ${GOLD.hairline}`,
+			background: "#06080a",
+			}}
+		>
+			<div className="w-full aspect-video overflow-hidden">
+			<img
+				src={imageUrl}
+				alt={value.alt || "Blog post illustration"}
+				className="w-full h-full object-cover"
+				loading="lazy"
+			/>
+			</div>
+
+			{/* Only render caption if the editor actually filled it out */}
+			{value.caption && (
+			<figcaption
+				className="px-4 py-3 text-center italic"
+				style={{
+				fontFamily: FONTS.body,
+				fontSize: "0.9rem",
+				color: TEXT.muted,
+				borderTop: `1px solid ${GOLD.hairline}`,
+				}}
+			>
+				{value.caption}
+			</figcaption>
+			)}
+		</figure>
+		);
+	},
 	},
 };
 

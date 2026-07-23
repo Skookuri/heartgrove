@@ -43,7 +43,27 @@ export const postType = defineType({
         defineField({
             name: 'body',
             type: 'array',
-            of: [{type: 'block'}],
+            of: [
+                {type: 'block'},
+                {
+                    type: 'image',
+                    title: 'Inline Image',
+                    options: {hotspot: true},// Enables visual cropping/positioning in Studio
+                    fields: [{
+                        name: 'alt',
+                        type: 'string',
+                        title: 'Alternative Text',
+                        description: 'Important for SEO and accessibility.',
+                        validation: (Rule) => Rule.required(),
+                    },
+                    {
+                        name: 'caption',
+                        type: 'string',
+                        title: 'Caption',
+                        description: 'Displays visibly below the image.',
+                    }]
+                }
+            ],
         }),
         defineField({
             name: 'ctaBtn',
