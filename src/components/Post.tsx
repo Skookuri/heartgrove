@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link, useRoute } from "wouter";
+import { Link, useRoute, useLocation } from "wouter";
 import { useEffect, useState } from "react";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import type { SanityDocument } from "@sanity/client";
@@ -7,8 +7,8 @@ import { PortableText } from "@portabletext/react";
 import { client, previewClient } from "../lib/sanity";
 import { isPreviewMode } from "../lib/preview";
 import { GlobalStyles } from "./GlobalStyles";
-import { GOLD, GOLD_GRADIENT, GOLD_RULE_GRADIENT, TEXT, FONTS } from "../theme";
-import { GoldDivider } from "./ui";
+import { GOLD, GOLD_RULE_GRADIENT, TEXT, FONTS } from "../theme";
+import { GoldDivider, GoldButton } from "./ui";
 import logo from "/src/images/MW_Logo_Whiter.png";
 import { Footer } from "./Footer";
 
@@ -222,6 +222,7 @@ const ptComponents = {
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function Post() {
+	const [, navigate] = useLocation(); //for going back to elist :D
 	const [, params] = useRoute("/blog/:slug");
 	const [post, setPost] = useState<SanityDocument | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -307,6 +308,7 @@ export default function Post() {
 		: null;
 
 	console.log("alt text time:", post.bannerAlt);
+	
 	return (
 		<>
 		<GlobalStyles />
@@ -479,40 +481,16 @@ export default function Post() {
 
 			{/* CTA Button */}
 			{post.ctaBtn?.url && (
-			<>
-				<div
-				className="w-full my-10"
-				style={{ height: 1, background: GOLD_RULE_GRADIENT }}
-				/>
-				<div className="flex justify-center py-8">
-				{/* <p
-					className="uppercase tracking-[0.25em] mb-4"
-					style={{
-						fontFamily: FONTS.heading,
-						fontSize: "0.62rem",
-						color: GOLD.primary,
-					}}
-					>
-					Interested in More?
-				</p> */}
-				<a
-					href={post.ctaBtn.url}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="inline-block uppercase tracking-[0.2em] font-bold px-10 py-4 transition-all duration-200 hover:-translate-y-0.5 no-underline"
-					style={{
-					fontFamily: FONTS.heading,
-					fontSize: "0.78rem",
-					background: GOLD_GRADIENT,
-					color: "#06080a",
-					border: "none",
-					boxShadow: "0 4px 28px rgba(231,170,81,0.3)",
-					}}
-				>
-					{post.ctaBtn.text}
-				</a>
-				</div>
-			</>
+				<>
+					
+					<div
+					className="w-full my-10"
+					style={{ height: 1, background: GOLD_RULE_GRADIENT }}
+					/>
+					<div className="flex justify-center py-8">
+						<GoldButton type="button" onClick={() => navigate(post.ctaBtn.url)}>{post.ctaBtn.text}</GoldButton>
+					</div>
+				</>
 			)}
 			</article>
 

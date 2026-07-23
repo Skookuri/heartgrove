@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async"; // SEO
 // import logo from "/src/images/MW_Logo.png";
 // import logo from "/src/images/Mystwood-Games-Logo-overlapping.png"
@@ -84,6 +85,17 @@ const HERO_SLIDES: SlideData[] = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Homepage() {
+
+    useEffect(() => {
+        if (window.location.hash) {
+        const id = window.location.hash.replace("#", "");
+        // slight delay ensures the DOM has fully painted before we try to scroll
+        const timer = setTimeout(() => {
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+        return () => clearTimeout(timer);
+        }
+    }, []); //allows for people to access elist and other specific sections without alr being on the domain
     
     return (
     <>
