@@ -18,7 +18,6 @@ const App = () => {
 
 
   // stuff for preview mode on sanity
-  
   useEffect(() => {
     const isPreview = isPreviewMode();
     if (!isPreview) return;

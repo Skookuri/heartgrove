@@ -35,6 +35,12 @@ export const postType = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: 'altTxtBanner',
+            title: 'Banner Alt Text',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: 'body',
             type: 'array',
             of: [{type: 'block'}],

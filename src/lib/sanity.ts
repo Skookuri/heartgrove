@@ -8,10 +8,6 @@ export const client = createClient({
   // useCdn: false,
 });
 
-const token = import.meta.env.VITE_SANITY_TOKEN;
-console.log("token length:", token?.length);
-console.log("token prefix:", token?.slice(0, 4));
-
 export const previewClient = createClient({
   projectId: "zksdr418",
   dataset: "production",

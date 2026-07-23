@@ -17,6 +17,7 @@ const POST_QUERY = `
 	title,
 	publishedAt,
 	image,
+	altTxtBanner,
 	body,
 	"author": author-> {
 		name,
@@ -41,8 +42,8 @@ const ptComponents = {
 	block: {
 		normal: ({ children }: { children?: React.ReactNode }) => (
 			<p
-			className="mb-5 text-lg leading-[1.9]"
-			style={{ fontFamily: FONTS.body, color: TEXT.muted }}
+			className="mb-5 text-xl leading-[1.9]"
+			style={{ fontFamily: FONTS.body, color: TEXT.cream }}
 			>
 			{children}
 			</p>
@@ -53,7 +54,7 @@ const ptComponents = {
 			style={{
 				fontFamily: FONTS.display,
 				fontSize: "clamp(1.4rem, 3vw, 2rem)",
-				color: TEXT.cream,
+				color: GOLD.primary,
 			}}
 			>
 			{children}
@@ -65,7 +66,7 @@ const ptComponents = {
 			style={{
 				fontFamily: FONTS.display,
 				fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
-				color: TEXT.cream,
+				color: GOLD.primary,
 			}}
 			>
 			{children}
@@ -153,7 +154,9 @@ export default function Post() {
 	const [loading, setLoading] = useState(true);
 	
 	const isPreview = isPreviewMode();
+	console.log("full URL:", window.location.href);
 	console.log("isPreview:", isPreview, window.location.search);
+	
 	useEffect(() => {
 		if (!params?.slug) return;
 		const activeClient = isPreview ? previewClient : client;
@@ -230,6 +233,7 @@ export default function Post() {
 		? urlFor(post.author.image)?.width(200).height(200).quality(100).url()
 		: null;
 
+	console.log("alt text time:", post.altTxtBanner);
 	return (
 		<>
 		<GlobalStyles />
@@ -282,10 +286,10 @@ export default function Post() {
 			{postImageUrl && (
 			<div className="w-full overflow-hidden" style={{ maxHeight: 420 }}>
 				<img
-				src={postImageUrl}
-				alt={post.title}
-				className="w-full object-cover object-top"
-				style={{ display: "block" }}
+					src={postImageUrl}
+					alt={post.altTxtBanner}
+					className="w-full object-cover object-top"
+					style={{ display: "block" }}
 				/>
 			</div>
 			)}
@@ -318,7 +322,7 @@ export default function Post() {
 				style={{
 				fontFamily: FONTS.display,
 				fontSize: "clamp(1.8rem, 4vw, 3rem)",
-				color: TEXT.cream,
+				color: GOLD.light,
 				textShadow: "0 2px 24px rgba(231,170,81,0.15)",
 				}}
 			>
@@ -345,7 +349,7 @@ export default function Post() {
 					style={{
 						width: 100,
 						height: 100,
-						border: `1px solid ${GOLD.muted}`,
+						border: `3px solid ${GOLD.primary}`,
 					}}
 					/>
 				)}
@@ -355,7 +359,7 @@ export default function Post() {
 					style={{
 						fontFamily: FONTS.heading,
 						fontSize: "0.6rem",
-						color: TEXT.dim,
+						color: TEXT.cream,
 					}}
 					>
 					Written by

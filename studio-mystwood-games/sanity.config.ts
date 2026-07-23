@@ -16,7 +16,7 @@ export default defineConfig({
 			title: 'Live Preview',
 			previewUrl: {
 				// Points to local development server running React app
-				origin: 'http://localhost:3000', 
+				origin: 'http://localhost:3000/blog/', 
 				
 				// // This maps specific post documents directly to their URL route patterns
 				// previewMode: {
