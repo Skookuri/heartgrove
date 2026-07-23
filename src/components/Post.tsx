@@ -39,8 +39,9 @@ const POST_QUERY = `
 	"ctaBtn": ctaBtn-> {
 		text,
 		url
-	}
-	"sns": sns-> {
+	},
+	"sns": sns[]-> {
+		"id": _key,
 		name,
 		url,
 		icon
@@ -396,107 +397,124 @@ export default function Post() {
 			)}
 
 			{/* ── Article ──────────────────────────────────────────────────── */}
-			<article
-			className="relative flex-1 w-full max-w-3xl mx-auto px-8 py-16 overflow-hidden"
-			>
-			{/* <CornerOrnaments /> */}
-
-			{/* Date */}
-			<p
-				className="uppercase tracking-[0.28em] mb-5"
-				style={{
-				fontFamily: FONTS.heading,
-				fontSize: "0.62rem",
-				color: GOLD.primary,
-				}}
-			>
-				{new Date(post.publishedAt).toLocaleDateString("en-US", {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-				})}
-			</p>
-
-			{/* Title */}
-			<h1
-				className="font-bold leading-tight mb-6"
-				style={{
-				fontFamily: FONTS.display,
-				fontSize: "clamp(1.8rem, 4vw, 3rem)",
-				color: GOLD.light,
-				textShadow: "0 2px 24px rgba(231,170,81,0.15)",
-				}}
-			>
-				{post.title}
-			</h1>
-
-			{/* Gold rule */}
-			<div
-				className="w-full mb-8"
-				style={{
-				height: 1,
-				background: GOLD_RULE_GRADIENT,
-				}}
-			/>
-
-			{/* Author */}
-			{post.author && (
-				<div className="flex items-center gap-4 mb-10">
-				{authorImageUrl && (
-					<img
-					src={authorImageUrl}
-					alt={post.author.name}
-					className="rounded-full object-cover flex-shrink-0"
+			<article className="relative flex-1 w-full max-w-3xl mx-auto px-8 py-16 overflow-hidden">
+				{/* Date */}
+				<p
+					className="uppercase tracking-[0.28em] mb-5"
 					style={{
-						width: 100,
-						height: 100,
-						border: `3px solid ${GOLD.primary}`,
+					fontFamily: FONTS.heading,
+					fontSize: "0.62rem",
+					color: GOLD.primary,
 					}}
-					/>
-				)}
-				<div>
-					<p
-					className="uppercase tracking-[0.18em]"
-					style={{
-						fontFamily: FONTS.heading,
-						fontSize: "0.6rem",
-						color: TEXT.cream,
-					}}
-					>
-					Written by
-					</p>
-					<p
-					style={{
-						fontFamily: FONTS.heading,
-						fontSize: "1rem",
-						color: GOLD.light,
-					}}
-					>
-					{post.author.name}
-					</p>
-				</div>
-				</div>
-			)}
+				>
+					{new Date(post.publishedAt).toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+					})}
+				</p>
 
-			{/* Body */}
-			{Array.isArray(post.body) && (
-				// ts-expect-error — ptComponents typing is loose but correct at runtime
-				<PortableText value={post.body} components={ptComponents} />
-			)}
+				{/* Title */}
+				<h1
+					className="font-bold leading-tight mb-6"
+					style={{
+					fontFamily: FONTS.display,
+					fontSize: "clamp(1.8rem, 4vw, 3rem)",
+					color: GOLD.light,
+					textShadow: "0 2px 24px rgba(231,170,81,0.15)",
+					}}
+				>
+					{post.title}
+				</h1>
 
-			{/* CTA Button */}
-			{post.ctaBtn?.url && (
-				<>
-					
-					<div
-					className="w-full my-10"
-					style={{ height: 1, background: GOLD_RULE_GRADIENT }}
-					/>
-					<div className="flex justify-center py-8">
-						<GoldButton type="button" onClick={() => navigate(post.ctaBtn.url)}>{post.ctaBtn.text}</GoldButton>
+				{/* Gold rule */}
+				<div
+					className="w-full mb-8"
+					style={{
+					height: 1,
+					background: GOLD_RULE_GRADIENT,
+					}}
+				/>
+
+				{/* Author */}
+				{post.author && (
+					<div className="flex items-center gap-4 mb-10">
+					{authorImageUrl && (
+						<img
+						src={authorImageUrl}
+						alt={post.author.name}
+						className="rounded-full object-cover flex-shrink-0"
+						style={{
+							width: 100,
+							height: 100,
+							border: `3px solid ${GOLD.primary}`,
+						}}
+						/>
+					)}
+					<div>
+						<p
+						className="uppercase tracking-[0.18em]"
+						style={{
+							fontFamily: FONTS.heading,
+							fontSize: "0.6rem",
+							color: TEXT.cream,
+						}}
+						>
+						Written by
+						</p>
+						<p
+						style={{
+							fontFamily: FONTS.heading,
+							fontSize: "1rem",
+							color: GOLD.light,
+						}}
+						>
+						{post.author.name}
+						</p>
 					</div>
-				</>
-			)}
+					</div>
+				)}
+
+				{/* Body */}
+				{Array.isArray(post.body) && (
+					// ts-expect-error — ptComponents typing is loose but correct at runtime
+					<PortableText value={post.body} components={ptComponents} />
+				)}
+
+				{/* CTA Button */}
+				{post.ctaBtn?.url && (
+					<>
+						
+						<div
+						className="w-full my-10"
+						style={{ height: 1, background: GOLD_RULE_GRADIENT }}
+						/>
+						<div className="flex justify-center py-8">
+							<GoldButton type="button" onClick={() => navigate(post.ctaBtn.url)}>{post.ctaBtn.text}</GoldButton>
+						</div>
+					</>
+				)}
+
+				{/* Social Media */}
+				{post.sns && post.sns.length > 0 && (
+				<div className="flex gap-4 items-center justify-center my-6">
+					{post.sns.map((link: { name: string; url: string; icon: string }, index: number) => (
+					<a
+						key={index}
+						href={link.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						title={link.name}
+						style={{ color: GOLD.light}}
+					>
+						<div
+							className="w-10 h-10 flex items-center justify-center [&_svg]:w-full [&_svg]:h-full [&_svg]:fill-current [&_svg]:stroke-current"
+							dangerouslySetInnerHTML={{ __html: link.icon }}
+						/>
+					</a>
+					))}
+				</div>
+				)}
 			</article>
 
 			<GoldDivider ornament />
