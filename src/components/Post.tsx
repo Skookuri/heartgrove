@@ -40,6 +40,11 @@ const POST_QUERY = `
 		text,
 		url
 	}
+	"sns": sns-> {
+		name,
+		url,
+		icon
+	}
 	}
 `;
 

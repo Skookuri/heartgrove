@@ -70,6 +70,13 @@ export const postType = defineType({
             title: 'CTA Button',
             type: 'reference',
             to: [{ type: 'ctaBtn' }]
-        })
+        }),
+        defineField({
+            name: 'sns',
+            title: 'Social Media',
+            type: 'array',
+            of: [{type: 'reference', to: [{ type: 'sns' }]}]
+        }),
+
     ],
 })
