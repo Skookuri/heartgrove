@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from "wouter";
 import Homepage from "./components/Homepage";
 import Shop from "./components/Shop";
 import Confirmation from "./components/Confirmation";
-import Blog from "./components/Blog";
+import Blogpost from "./components/Post";
 import { Analytics } from "@vercel/analytics/react"
 // import UserPage from "./components/UserPage";
 import { enableVisualEditing } from "@sanity/visual-editing";
@@ -33,7 +33,7 @@ const App = () => {
         <Route path="/shop" component={Shop} />
         <Route path="/confirmation" component={Confirmation} />
         {/* <Route path="/users/:name" component={UserPage} /> */}
-        <Route path="/blog/:slug" component={Blog} />
+        <Route path="/blog/:slug" component={Blogpost} />
 
         {/* Shows a 404 error if the path doesn't match anything */}
         {
